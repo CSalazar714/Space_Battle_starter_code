@@ -1,85 +1,111 @@
-const YouWin = () => {
-    if(alienArr[0].hull <= 0){
-        console.log("Enemy Ship has been destroyed!")
-        alienArr.slice(0,1);
-    }
-}
+ //Creating Buttons
+       const buttons = document.createElement('div')
+       buttons.id = "buttonDiv"
+       const attackBtn = document.createElement('button')
+       attackBtn.id = "attackBtn"
+       attackBtn.innerText = "Attack"
+       const retreatBtn = document.createElement('button')
+       retreatBtn.id = "retreatBtn"
+       retreatBtn.innerText = "Retreat"
+       const startBtn = document.createElement('button')
+       startBtn.id = "retreatBtn"
+       startBtn.innerText = "Start Game"
+       buttons.append(attackBtn)
+       buttons.append(retreatBtn)
 
+       // Class creation and attack function creation//
 
 class Humanship{
-constructor(MFalcon){
-    this.hull = 20
-    this.attackDmg = 5
-    this.accuracy = .7
-    this.ship = MFalcon
-
+    constructor(name,hull, attackDmg, accuracy){
+        this.name = name;
+        this.hull = 20
+        this.attackDmg = 5
+        this.accuracy = .7
+        
     }
     attack(enemy) {
-
         if(Math.random()> this.accuracy){
-            console.log(this.ship + "fired upon the enemy!");
-            console.log(enemy.hull -= this.attackDmg)
+            alert("Target Missed!")  
+        }
+         else{      
+         enemy.hull -=this.attackDmg;
+         alert("Target hit!"+ enemy.name + "has" + enemy.hull + " hull remaining." )
+        }
     }
-
-        else{
-        console.log( enemy.hull -= (this.attackDmg));
-        
-        if (enemy.hull <= 0){
-        console.log("You destroyed the enemy ship!")
-            if(alienArr[0]=== ""){
-                console.log("You defeated all the enemy ships! You successfully defended the planet!")
-            }
-            else{
-                console.log("Watch out! next ship is approaching!")
-            }
-    }
-    }
-}}
-
+}
 class Alienship{
-    constructor(tieFighter){
+    constructor(name,hull,attackDmg,accuracy){
+        this.name = name
         this.hull = Math.floor(Math.random()* (6-3) + 3)
         this.attackDmg = Math.floor(Math.random()* (4 - 2) +2)
         this.accuracy = Math.random() * (.8 - .6)+ .6;
-        this.ship = tieFighter
-    
-    }   
-    attack(enemy) {
+    }
 
-        if(Math.random()> this.accuracy){
-            console.log("You Missed!")
-    }
-        else{
-        return enemy.hull -= (this.attackDmg)
-    }   
-        if (enemy.hull <= 0){
-        console.log("You destroyed the enemy ship!")
-       
-    }
-        else{
-        console.log("Enemy has "+ enemy.hull +" hp remaining!" )
-        
-    }
-    
-    }
+        attack(enemy) {
+            if(Math.random()> this.accuracy){
+                alert(this.name + "Missed!")  
+            }
+             else{      
+             enemy.hull -=this.attackDmg;
+             alert("We're hit! we have " + enemy.hull + "hull remaining!"  )
+            }
+        }   
 }
+//creating arrays for each side//
+let RebelsArr= [new Humanship("Millenium Falcon",20,5,.7)];
+let EmpireArr = [];
+const numTiefighters = 6;
+//console.log(RebelsArr[0])
+//used to create enemy ship array//
+
+    // console.log(TiefighterArr)
+for(let i = 0; i < numTiefighters; i++){
+    const createAlienShip = new Alienship(`Tiefighter ${i + 1}`);
+   EmpireArr.push(createAlienShip); }
+    //Creating function to begin the game this will be the prompt to get player's name//
+   function BeginGame(){
+       let playerName = prompt("What is your Pilotname?")
+       alert("Welcome" + playerName + "The Rebels need your help! The Empire has found our secret base and we need you to pilot the Millenium Falcon to defend us!")
+   }
+ // Battle function to go through steps of ships damaging each other//
+    function Battle() {
+        while(EmpireArr[0].hull > 0)
+        if(RebelsArr[0].hull> 0 || EmpireArr.length > 0){
+        RebelsArr.attack(EmpireArr[0])
+            if(EmpireArr[0].hull > 0){
+                EmpireArr.attack(RebelsArr[0])
+            }
+        }
+            else{
+                EmpireArr.shift()
+                alert("Empire Tie Fighter Destroyed!")    
+                while(EmpireArr.length > 0)
+                {alert("Watch out here comes another one!")}
+//checks to see if there are enemy ships left
+        if(EmpireArr.length <= 0){
+            gameOver = true
+        }
+        } 
+        }
+        // creating condition to end game//
+    if(gameOver) {
+        if (RebelsArr[0].hull <= 0){
+        alert("You have been defeated, the resistance has lost")
+    } else {
+        alert("You have successfully defeated the Empire Tie Fighters! May the Force be with you!")
+    }}
+    gameover = false
 
 
-let humanArr = [new Humanship("USS.Schwarzenegger")]
-let alienArr = [new Alienship("tieFighter1")]
-
-// console.log(humanArr);
-// console.log(alienArr);
-
-// attack(enemy) {
-
-//     if(Math.random()> accuracy){
-//         console.log("You Missed!")
-//     }else{
-//     return enemy.hull -= this.attack
-// }
-// console.log("You Hit! Enemy tieFighter has" + enemy.hull + "Hp remaining!")
-// }
-
-console.log(humanArr[0].attack(alienArr[0]))
-
+//Buttons programmed attackBtn should run the Battle function and allow it to run it again for each enemy ship
+        attackBtn.addEventListener('click', ()=>{
+            Battle();
+        });
+//retreatBtn provides a message, and refreshes page to restart game. 
+        retreatBtn.addEventListener(`click`, ()=>{
+            alert("We appreciate the help, We'll do what we can from here.")
+          //this should refresh the page that way "restarting" the game
+            location.reload()
+          //read firefox requires a false boolean response to use location.reload
+            return(false)
+        })

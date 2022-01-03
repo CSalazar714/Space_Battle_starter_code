@@ -4,13 +4,15 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>SpaceBattle</title>
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<button 
 </head>
 <body>
+    
     <div class="bodyContainer">
 
         <div class="mainCharacterView left" >
@@ -24,12 +26,25 @@
                         
                         
                     </form>
-
-                Hull : 15 <br>
-                FirePower : 5 <br>
+                    <script type="text/javascript">
+                        function ship() {
+                            let name = RebelsArr[0].name;
+                            let hull = RebelsArr[0].hull;
+                            let attackDmg = RebelsArr[0].attackDmg;
+                            let accuracy = RebelsArr[0].accuracy;
+                  
+                            let str = "Name:" + name + "\nHull: "
+                                + hull + "\nAttack" + attackDmg 
+                                + "\nAccuracy " + accuracy;
+                  
+                            document.getElementById(
+                                'text').innerHTML = str;
+                        }
+                    </script>
+                Hull : 20 <br>
+                FirePower :  <br>
                 Accuracy : .7 <br>
-
-                
+             
                 </div>
                 
         </div>
@@ -45,13 +60,13 @@
                     Hull : 6 <br>
                     FirePower : 3 <br>
                     Accuracy : .6 <br>
-    
-    
+
                 </div>
             
         </div>
 
 
     <script src="app.js"></script>
+  
 </body>
 </html>
